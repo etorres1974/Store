@@ -57,9 +57,6 @@ class RoupaController {
 
         res.send('Clear')
     }
-    static async teste(req, res) {
-        res.send('Teste')
-    }
 
 }
 

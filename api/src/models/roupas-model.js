@@ -7,11 +7,6 @@ var roupaSchema = new mongoose.Schema({
     },
     img:{
         type: String,
-        required: true,
-    },
-    fav:{
-        type: Boolean,
-        
     },
     flex:{
         type: Number
@@ -19,7 +14,9 @@ var roupaSchema = new mongoose.Schema({
     preco:{
         type: Number,
         required: true
+    },
+    quantidade:{
+        type: Number
     }
 });
-//Criando o modelo 
 module.exports = mongoose.model('Roupa', roupaSchema);

@@ -18,8 +18,4 @@ router.put("/", RoupaController.alterar)
 //Exclusão de uma Roupa
 router.delete("/del/:id", RoupaController.deletar)
 
-//router.delete("/deletarTodos", RoupaController.deletarTodos)
-
-router.delete("/teste", RoupaController.teste)
-
 module.exports = router
