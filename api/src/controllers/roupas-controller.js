@@ -14,10 +14,15 @@ class RoupaController {
         res.json(roupa)
     }
 
-    static cadastrar(req, res) {
-        roupaModel.create(req.body)
+    static async cadastrar(req, res) {
+        try{
+        await roupaModel.create(req.body)
+        res.send(req.body.descricao + ' cadastrado com sucesso')
+        }catch(err){
+            res.send(err)
+        }
         //envia mensagem pro client
-        res.send('Cadastrando com sucesso')
+        
     }
 
     static async alterar(req, res) {

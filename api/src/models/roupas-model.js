@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var roupaSchema = new mongoose.Schema({
     descricao: {
         type: String,
-        required: true
+        
     },
     img:{
         type: String,
@@ -13,7 +13,7 @@ var roupaSchema = new mongoose.Schema({
     },
     preco:{
         type: Number,
-        required: true
+        
     },
     quantidade:{
         type: Number

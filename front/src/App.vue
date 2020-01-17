@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -34,7 +33,7 @@
         prepend-inner-icon="mdi-magnify"
         solo-inverted
         v-model="search"
-        @keyup="buscar()"
+        @keyup="buscar(search)"
         
       ></v-text-field>
         
@@ -60,7 +59,7 @@
 </template>
 
 <script>
-
+import {mapMutations} from "vuex"
 export default {
   name: 'App',
 
@@ -80,5 +79,9 @@ export default {
         
       ]
     }),
-};
+  methods:{
+      ...mapMutations(['buscar'])
+    }
+}
+;
 </script>

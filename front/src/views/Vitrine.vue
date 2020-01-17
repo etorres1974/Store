@@ -3,7 +3,7 @@
     <h1>Vitrine</h1>
     <v-container fluid>
       <v-row dense>
-        <v-col v-for="(card, i) in allItens" :key="card._id" :cols=4>
+        <v-col v-for="(card, i) in getFiltrado" :key="i" :cols=4>
           <v-card>
             <v-img
               :src="card.img"
@@ -20,8 +20,8 @@
               <v-spacer></v-spacer>
 
               <v-btn icon>
-                <v-icon v-if="card.fav" color="red" @click="favoritar(i)">mdi-heart</v-icon>
-                <v-icon v-else @click="favoritar(i)">mdi-heart</v-icon>
+                <v-icon v-if="card.fav" color="red" @click="deletar(key)">mdi-heart</v-icon>
+                <v-icon v-else @click="deleteById(card._id)">mdi-heart</v-icon>
               </v-btn>
 
               <v-btn icon>
@@ -36,7 +36,8 @@
 </template>
 
 <script>
-import {mapActions, mapGetters } from "vuex";
+import {mapGetters ,mapActions} from "vuex"
+
 export default {
   components: {},
   data() {
@@ -65,13 +66,20 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchItens"])
+    deletar(key){
+      console.log(key)
+    },
+    ...mapActions(["fetchItens"]),
+    ...mapActions(["deleteById"])
   },
   computed: {
-    ...mapGetters(["allItens"])
+    ...mapGetters(['allItens']),
+    ...mapGetters(['getFiltrado'])
   },
-  created() {
-    this.fetchItens();
+  
+  created(){
+    this.fetchItens()
+    
   }
 };
 </script>

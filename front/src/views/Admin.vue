@@ -1,42 +1,53 @@
 <template>
   <v-container>
     <h1>Adicionar Roupas</h1>
-    <v-container fluid>
-      <v-row dense>
-        <v-col v-for="(card, i) in allItens" :key="card._id" :cols=4>
-          <v-card>
-            <v-img
-              :src="card.img"
-              class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="400"
-              width="400"
-            >
-              <v-card-title></v-card-title>
-            </v-img>
+    <v-row>
+      <v-col>
+        <v-text-field v-model="roupa.descricao" placeholder="Descrição"></v-text-field>
+        <v-file-input show-size label="Foto" @change="onFileSelected" prepend-icon="mdi-camera"></v-file-input>
 
-            <v-card-actions>
-              {{ card.descricao }}
-              <v-spacer></v-spacer>
-
-              <v-btn icon>
-                <v-icon v-if="card.fav" color="red" @click="deletar(key)">mdi-heart</v-icon>
-                <v-icon v-else @click="deleteById(card._id)">mdi-heart</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
+        
+      </v-col>
+      
+    </v-row>
+    <v-row>
+        <v-img v-if="imagePreview"  :src="imagePreview" contain max-height="300" max-width="300" />
       </v-row>
-    </v-container>
+      <v-row><br></v-row>
+      <v-row >
+        <v-btn block align="center" @click="adicionarItem(roupa)">Salvar</v-btn>
+      </v-row>
+      
+        <v-list>
+      <v-list-item-group>
+        <v-list-item
+          v-for="(item, i) in arrCategorias"
+          :key="i"
+        >
+          <v-list-item-title v-text="item.descricao"></v-list-item-title>
+          <v-list-item-icon>
+            <v-spacer></v-spacer>
+            <v-icon right small @click="deleteItem(item._id)"> mdi-delete </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
+
+    
+
+
+    <v-snackbar :color="color" v-model="snackbar">
+      {{ text }}
+      <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
-import {mapGetters ,mapActions} from "vuex"
+import {mapGetters ,mapActions } from "vuex"
 
 export default {
   components: {},
@@ -54,8 +65,8 @@ export default {
 
       // Campos para input
       roupa: {
-        descricao: "",
-        img: "",
+        descricao: "Test",
+        img: "123",
         flex: 4,
         fav: false
       },
@@ -66,12 +77,30 @@ export default {
     };
   },
   methods: {
-    deletar(key){
-      console.log(key)
+    async onFileSelected(file) {
+      try {
+        let contentBuffer = await readFileAsync(file);
+        this.roupa.img = contentBuffer;
+        this.imagePreview = contentBuffer;
+      } catch (err) {
+        console.log(err);
+      }
+      function readFileAsync(file) {
+        return new Promise((resolve, reject) => {
+          let reader = new FileReader();
+
+          reader.onload = () => {
+            resolve(reader.result);
+          };
+
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
     },
     ...mapActions(["fetchItens"]),
-    ...mapActions(["test"]),
-    ...mapActions(["deleteById"])
+    ...mapActions(["deleteById"]),
+    ...mapActions(["adicionarItem"])
   },
   computed: {
     ...mapGetters(['allItens'])
@@ -79,7 +108,7 @@ export default {
   
   created(){
     this.fetchItens()
-    this.test("olá")
+    
   }
 };
 </script>
