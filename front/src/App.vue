@@ -19,6 +19,7 @@
     </v-navigation-drawer>
 
     <v-app-bar
+      class="naoImprimir"
       app
       color="indigo"
       dark
@@ -26,7 +27,7 @@
       <v-app-bar-nav-icon  @click.stop="drawer = !drawer" />
       <v-toolbar-title>Loja</v-toolbar-title>
       <v-text-field
-        class="mx-4"
+        class="mx-4 r"
         flat
         hide-details
         label="Search"
@@ -76,6 +77,7 @@ export default {
       items:[
         {icon:"mdi-home", link:"/admin", name:"Admin"},
         {icon: "mdi-hanger", link:"/vitrine", name:"Vitrine"},
+        {icon: "mdi-shopping", link:"/venda", name:"venda"}
         
       ]
     }),

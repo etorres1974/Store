@@ -3,8 +3,11 @@
     <h1>Adicionar Roupas</h1>
     <v-row>
       <v-col>
-        <v-text-field v-model="roupa.descricao" placeholder="Descrição"></v-text-field>
         <v-file-input show-size label="Foto" @change="onFileSelected" prepend-icon="mdi-camera"></v-file-input>
+        <v-text-field v-model="roupa.descricao" placeholder="Descrição"></v-text-field>
+        <v-text-field type=number v-model="roupa.quantidade" placeholder="Quantidade"></v-text-field>
+        <v-text-field type=number v-model="roupa.preco" placeholder="Preço"></v-text-field>
+        
 
         
       </v-col>
@@ -15,13 +18,13 @@
       </v-row>
       <v-row><br></v-row>
       <v-row >
-        <v-btn block align="center" @click="adicionarItem(roupa)">Salvar</v-btn>
+        <v-btn block align="center" @click="adicionar(roupa)">Salvar</v-btn>
       </v-row>
       
         <v-list>
       <v-list-item-group>
         <v-list-item
-          v-for="(item, i) in arrCategorias"
+          v-for="(item, i) in getFiltrado"
           :key="i"
         >
           <v-list-item-title v-text="item.descricao"></v-list-item-title>
@@ -65,8 +68,8 @@ export default {
 
       // Campos para input
       roupa: {
-        descricao: "Test",
-        img: "123",
+        descricao: "",
+        img: "",
         flex: 4,
         fav: false
       },
@@ -98,12 +101,17 @@ export default {
         });
       }
     },
+    async adicionar(item){
+      await this.adicionarItem(item)
+      this.fetchItens()
+    },
     ...mapActions(["fetchItens"]),
     ...mapActions(["deleteById"]),
     ...mapActions(["adicionarItem"])
   },
   computed: {
-    ...mapGetters(['allItens'])
+    ...mapGetters(['allItens']),
+    ...mapGetters(['getFiltrado'])
   },
   
   created(){

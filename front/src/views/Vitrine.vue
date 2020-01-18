@@ -3,7 +3,7 @@
     <h1>Vitrine</h1>
     <v-container fluid>
       <v-row dense>
-        <v-col v-for="(card, i) in getFiltrado" :key="i" :cols=4>
+        <v-col v-for="(card, i) in getFiltrado" :key="card._id" :cols=4>
           <v-card>
             <v-img
               :src="card.img"
@@ -21,12 +21,17 @@
 
               <v-btn icon>
                 <v-icon v-if="card.fav" color="red" @click="deletar(key)">mdi-heart</v-icon>
-                <v-icon v-else @click="deleteById(card._id)">mdi-heart</v-icon>
+                <v-icon v-else @click="deleteById(card._id)">mdi-delete</v-icon>
               </v-btn>
 
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
+              <v-btn  v-if="!getCarrinho.includes(card)" @click="adicionarCarrinho(card)" icon>
+                <v-icon >mdi-shopping</v-icon>
               </v-btn>
+
+              <v-btn v-else @click="removerCarrinho(i)" icon>
+                <v-icon color="amber"  >mdi-shopping</v-icon>
+              </v-btn>
+
             </v-card-actions>
           </v-card>
         </v-col>
@@ -36,7 +41,7 @@
 </template>
 
 <script>
-import {mapGetters ,mapActions} from "vuex"
+import {mapGetters ,mapActions, mapMutations} from "vuex"
 
 export default {
   components: {},
@@ -70,11 +75,15 @@ export default {
       console.log(key)
     },
     ...mapActions(["fetchItens"]),
-    ...mapActions(["deleteById"])
+    ...mapActions(["deleteById"]),
+    ...mapMutations(["adicionarCarrinho"]),
+    ...mapMutations(['removerCarrinho']),
+    
   },
   computed: {
     ...mapGetters(['allItens']),
-    ...mapGetters(['getFiltrado'])
+    ...mapGetters(['getFiltrado']),
+    ...mapGetters(['getCarrinho']),
   },
   
   created(){
