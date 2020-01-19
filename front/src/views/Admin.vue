@@ -39,7 +39,7 @@
       </v-list-item-group>
     </v-list>
 
-    
+    <h3 v-show="getFiltrado.length == 0"> Vazio</h3>
 
 
     <v-snackbar :color="color" v-model="snackbar">

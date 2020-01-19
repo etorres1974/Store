@@ -7,12 +7,12 @@
 
     <v-list>
     <v-list-item-group >
-          <v-list-item v-for="(item, i) in getCarrinho" :key="item._id">
+          <v-list-item v-for="(item) in getCarrinho" :key="item._id">
             <v-list-item-title align="start" v-text="item.descricao"></v-list-item-title>
             <v-list-item-icon>
               <v-spacer></v-spacer>
               {{item.preco}}
-              <v-icon v-if="!printing" right small @click="removerCarrinho(i)">mdi-delete</v-icon>
+              <v-icon v-if="!printing" right small @click="removerCarrinho(item._id)">mdi-delete</v-icon>
             </v-list-item-icon>
             <v-list-item-content></v-list-item-content>
           </v-list-item>
@@ -29,7 +29,7 @@
     
     <v-btn block align="center" class="naoImprimir" v-on:click.stop="imprimir">Finalizar Compra</v-btn>
     <br>
-    <v-btn block align="center" class="naoImprimir" v-on:click.stop="removerEstoque">Remover Itens Do Estoque</v-btn>
+    <v-btn block align="center" class="naoImprimir" v-on:click.stop="removerEstoque()">Remover Itens Do Estoque</v-btn>
   </v-container>
 </template>
 
@@ -54,7 +54,8 @@ export default {
     inverter() {
       this.printing = !this.printing;
     },
-    ...mapMutations(['removerCarrinho']),
+    ...mapActions(['removerCarrinho']),
+    ...mapActions(['removerEstoque'])
     
   },
   computed: {

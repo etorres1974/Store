@@ -3,7 +3,7 @@
     <h1>Vitrine</h1>
     <v-container fluid>
       <v-row dense>
-        <v-col v-for="(card, i) in getFiltrado" :key="card._id" :cols=4>
+        <v-col v-for="(card) in getFiltrado" :key="card._id" :cols=4>
           <v-card>
             <v-img
               :src="card.img"
@@ -24,7 +24,7 @@
                 <v-icon  @click="deleteById(card._id)">mdi-delete</v-icon>
               </v-btn>
 
-              <v-btn v-if="getCarrinho.includes(card)" @click="removerCarrinho(i)" icon>
+              <v-btn v-if="getCarrinho.some(item => item._id == card._id)" @click="removerCarrinho(card._id)" icon>
                 <v-icon color="amber"  >mdi-shopping</v-icon>
               </v-btn>
               
@@ -37,6 +37,7 @@
             </v-card-actions>
           </v-card>
         </v-col>
+        <h3 v-show="getFiltrado.length == 0"> Vazio</h3>
       </v-row>
     </v-container>
   </v-container>
@@ -74,14 +75,11 @@ export default {
     
   },
   computed: {
-    ...mapGetters(['allItens']),
-    ...mapGetters(['getFiltrado']),
-    ...mapGetters(['getCarrinho']),
+    ...mapGetters(['allItens', "getFiltrado", "getCarrinho"]),
   },
   
   created(){
     this.fetchItens()
-    
   }
 };
 </script>

@@ -42,9 +42,26 @@ const actions = {
             commit("adicionarCarrinho", item)
         }
     },
-    removerCarrinho({commit}, index){
-        confirm("Deseja remover do carrinho") && 
-        commit("removerCarrinho", index)
+    removerCarrinho({commit}, id){
+        if(confirm("Deseja remover do carrinho")){
+            var arr = state.carrinho.filter(item => {
+                if(item._id != id) 
+                return true
+            })
+            commit("setCarrinho", arr)
+        } 
+        
+    },
+    async removerEstoque({commit, state},){
+        if(confirm("Deseja excluir do estoque os itens do carrinho?")){
+            
+            state.carrinho.forEach(async function(item){
+                console.log(await (await axios.delete(`http://localhost:3000/roupas/del/${item._id}`)).statusText)
+            })
+            commit("setCarrinho",[])
+            
+        } 
+        
     },
     buscar({commit}, key){
         commit("buscar",key)
@@ -54,11 +71,14 @@ const actions = {
 //Devem ser Síncronas, o primeiro parametro sempre é o state
 const mutations = {
     setItens: (state, res) => (state.banco = res),
-    delete: (state, id) => state.banco.filter(item => {if(item._id != id) return true}),
+    delete: (state, id) => state.banco = state.banco.filter(item => {if(item._id != id) return true}),
     log: (state, text) => console.log(text),
     buscar: (state, key) => state.busca = key,
     adicionarCarrinho: (state, item) => state.carrinho.push(item),
-    removerCarrinho: (state, index) => state.carrinho.splice(index,1)
+    setCarrinho: (state, array) => state.carrinho = array
+        
+    
+    //removerCarrinho: (state, id) => state.carrinho.filter(item => {if(item._id != id) return true}),
 }
 
 export default {
