@@ -20,17 +20,19 @@
               <v-spacer></v-spacer>
 
               <v-btn icon>
-                <v-icon v-if="card.fav" color="red" @click="deletar(key)">mdi-heart</v-icon>
-                <v-icon v-else @click="deleteById(card._id)">mdi-delete</v-icon>
+              
+                <v-icon  @click="deleteById(card._id)">mdi-delete</v-icon>
               </v-btn>
 
-              <v-btn  v-if="!getCarrinho.includes(card)" @click="adicionarCarrinho(card)" icon>
+              <v-btn v-if="getCarrinho.includes(card)" @click="removerCarrinho(i)" icon>
+                <v-icon color="amber"  >mdi-shopping</v-icon>
+              </v-btn>
+              
+              <v-btn  v-else @click="adicionarCarrinho(card)" icon>
                 <v-icon >mdi-shopping</v-icon>
               </v-btn>
 
-              <v-btn v-else @click="removerCarrinho(i)" icon>
-                <v-icon color="amber"  >mdi-shopping</v-icon>
-              </v-btn>
+              
 
             </v-card-actions>
           </v-card>
@@ -41,7 +43,7 @@
 </template>
 
 <script>
-import {mapGetters ,mapActions, mapMutations} from "vuex"
+import {mapGetters ,mapActions} from "vuex"
 
 export default {
   components: {},
@@ -53,10 +55,6 @@ export default {
       text: "SnackText",
       error: "",
 
-      arrCategorias: [],
-
-      key: "", // busca
-
       // Campos para input
       roupa: {
         descricao: "",
@@ -64,20 +62,15 @@ export default {
         flex: 4,
         fav: false
       },
-
-      // Imagem
-      selectedFile: null,
-      imagePreview: ""
+      
+    
     };
   },
   methods: {
-    deletar(key){
-      console.log(key)
-    },
     ...mapActions(["fetchItens"]),
     ...mapActions(["deleteById"]),
-    ...mapMutations(["adicionarCarrinho"]),
-    ...mapMutations(['removerCarrinho']),
+    ...mapActions(["adicionarCarrinho"]),
+    ...mapActions(['removerCarrinho']),
     
   },
   computed: {

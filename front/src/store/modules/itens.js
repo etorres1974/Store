@@ -16,6 +16,7 @@ const getters = {
 // o mapActions solicita a Api do Backend modificações
 const actions = {
     async fetchItens({ commit }){
+        console.log("Fetching")
         const response = await axios.get("http://localhost:3000/roupas")
         commit("setItens", response.data)
     },
@@ -34,6 +35,20 @@ const actions = {
         commit("log", response)
         
     },
+    adicionarCarrinho({commit}, item){
+        if(state.carrinho.includes(item)){
+            commit("log", "Este Item Ja esta no Carrinho")
+        }else{
+            commit("adicionarCarrinho", item)
+        }
+    },
+    removerCarrinho({commit}, index){
+        confirm("Deseja remover do carrinho") && 
+        commit("removerCarrinho", index)
+    },
+    buscar({commit}, key){
+        commit("buscar",key)
+    }
 }
 
 //Devem ser Síncronas, o primeiro parametro sempre é o state
@@ -43,7 +58,7 @@ const mutations = {
     log: (state, text) => console.log(text),
     buscar: (state, key) => state.busca = key,
     adicionarCarrinho: (state, item) => state.carrinho.push(item),
-    removerCarrinho: (state, index) => confirm("Deseja remover do carrinho") && state.carrinho.splice(index,1)
+    removerCarrinho: (state, index) => state.carrinho.splice(index,1)
 
     
 }

@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex"
+import {mapActions} from "vuex"
 export default {
   name: 'App',
 
@@ -70,10 +70,8 @@ export default {
 
   data: () => ({
       drawer: false,
-      admin: "/admin",
-      roupas:"/roupas",
+
       search: "",
-      
       items:[
         {icon:"mdi-home", link:"/admin", name:"Admin"},
         {icon: "mdi-hanger", link:"/vitrine", name:"Vitrine"},
@@ -82,7 +80,7 @@ export default {
       ]
     }),
   methods:{
-      ...mapMutations(['buscar'])
+      ...mapActions(['buscar'])
     }
 }
 ;
