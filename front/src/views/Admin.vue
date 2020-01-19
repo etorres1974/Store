@@ -24,13 +24,13 @@
         <v-list>
       <v-list-item-group>
         <v-list-item
-          v-for="(item, i) in getFiltrado"
-          :key="i"
+          v-for="(item) in getFiltrado"
+          :key="item._id"
         >
           <v-list-item-title v-text="item.descricao"></v-list-item-title>
           <v-list-item-icon>
             <v-spacer></v-spacer>
-            <v-icon right small @click="deleteItem(item._id)"> mdi-delete </v-icon>
+            <v-icon right small @click="deleteById(item._id)"> mdi-delete </v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             
@@ -61,11 +61,6 @@ export default {
       snackbar: false,
       text: "SnackText",
       error: "",
-
-      arrCategorias: [],
-
-      key: "", // busca
-
       // Campos para input
       roupa: {
         descricao: "",
@@ -80,6 +75,12 @@ export default {
     };
   },
   methods: {
+    limparFormulario(){
+      this.roupa = {}
+      this.imagePreview = ""
+      this.selectedFile = null
+      this.snackbar = true
+    },
     async onFileSelected(file) {
       try {
         let contentBuffer = await readFileAsync(file);
@@ -103,6 +104,7 @@ export default {
     },
     async adicionar(item){
       await this.adicionarItem(item)
+      this.limparFormulario()
       this.fetchItens()
     },
     ...mapActions(["fetchItens"]),

@@ -23,9 +23,9 @@ const actions = {
     async deleteById({commit}, id){
         if(confirm("Voce tem Certeza que deseja deletar?")){
         const response = await axios.delete(`http://localhost:3000/roupas/del/${id}`)
-        if(response.data.deletedCount > 0)
+        if(response.data.deletedCount > 0){
             commit("delete", id)
-        else{
+        }else{
             commit("log","Failed to Delete")
         }}
         // Atualizar Banco
@@ -54,13 +54,11 @@ const actions = {
 //Devem ser Síncronas, o primeiro parametro sempre é o state
 const mutations = {
     setItens: (state, res) => (state.banco = res),
-    delete: (state, id) => state.banco.splice(id,1),
+    delete: (state, id) => state.banco.filter(item => {if(item._id != id) return true}),
     log: (state, text) => console.log(text),
     buscar: (state, key) => state.busca = key,
     adicionarCarrinho: (state, item) => state.carrinho.push(item),
     removerCarrinho: (state, index) => state.carrinho.splice(index,1)
-
-    
 }
 
 export default {
