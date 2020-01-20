@@ -15,14 +15,14 @@ app.use(cors())
 app.use('/roupas',  roupasRoutes)
 
 //Configurando a porta
-const port = 3000
+const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Api rodando na porta ${port}!`))
 
 //Conectando com Mongo
 const mongoose = require('mongoose');
 mongoose.connect(
-    
-    `mongodb+srv://${process.env.DATA_USER}:${process.env.DATA_PASS}@mycluster-sbfan.gcp.mongodb.net/test?retryWrites=true&w=majority`, {
+    //${process.env.DATA_USER}:${process.env.DATA_PASS}
+    `mongodb+srv://abc:123@mycluster-sbfan.gcp.mongodb.net/test?retryWrites=true&w=majority`, {
         useNewUrlParser: true, useUnifiedTopology: true 
     });
 

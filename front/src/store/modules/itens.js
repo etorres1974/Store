@@ -1,4 +1,5 @@
-import axios from "axios"
+import axios from "../../plugins/axios-instance"
+
 
 const state = {
     banco: [],
@@ -17,12 +18,12 @@ const getters = {
 const actions = {
     async fetchItens({ commit }){
         console.log("Fetching")
-        const response = await axios.get("http://localhost:3000/roupas")
+        const response = await axios.get("/roupas")
         commit("setItens", response.data)
     },
     async deleteById({commit}, id){
         if(confirm("Voce tem Certeza que deseja deletar?")){
-        const response = await axios.delete(`http://localhost:3000/roupas/del/${id}`)
+        const response = await axios.delete(`/roupas/del/${id}`)
         if(response.data.deletedCount > 0){
             commit("delete", id)
         }else{
@@ -31,7 +32,7 @@ const actions = {
         // Atualizar Banco
     },
     async adicionarItem({commit}, item){
-        const response = await axios.post("http://localhost:3000/roupas", item)
+        const response = await axios.post("/roupas", item)
         commit("log", response)
         
     },
@@ -56,7 +57,7 @@ const actions = {
         if(confirm("Deseja excluir do estoque os itens do carrinho?")){
             
             state.carrinho.forEach(async function(item){
-                console.log(await (await axios.delete(`http://localhost:3000/roupas/del/${item._id}`)).statusText)
+                console.log(await (await axios.delete(`/roupas/del/${item._id}`)).statusText)
             })
             commit("setCarrinho",[])
             
