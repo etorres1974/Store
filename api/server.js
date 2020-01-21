@@ -21,8 +21,7 @@ app.listen(port, () => console.log(`Api rodando na porta ${port}!`))
 //Conectando com Mongo
 const mongoose = require('mongoose');
 mongoose.connect(
-    //${process.env.DATA_USER}:${process.env.DATA_PASS}
-    `mongodb+srv://abc:123@mycluster-sbfan.gcp.mongodb.net/test?retryWrites=true&w=majority`, {
+    `mongodb+srv://${process.env.DATA_USER}:${process.env.DATA_PASS}@mycluster-sbfan.gcp.mongodb.net/test?retryWrites=true&w=majority`, {
         useNewUrlParser: true, useUnifiedTopology: true 
     });
 
