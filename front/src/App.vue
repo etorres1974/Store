@@ -75,7 +75,8 @@ export default {
       items:[
         {icon:"mdi-home", link:"/admin", name:"Admin"},
         {icon: "mdi-hanger", link:"/vitrine", name:"Vitrine"},
-        {icon: "mdi-shopping", link:"/venda", name:"venda"}
+        {icon: "mdi-shopping", link:"/venda", name:"Sacola"},
+        {icon: "mdi-information-outline", link:"/about", name:"About"}
         
       ]
     }),
