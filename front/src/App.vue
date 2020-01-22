@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-navigation-drawer
+      
       v-model="drawer"
       app
       @click.stop="drawer = !drawer"
@@ -42,7 +43,7 @@
     </v-app-bar>
 
 
-    <v-content >
+    <v-content v-touch="{left: () => drawer = false, right: () => drawer = true}" >
         <v-container fluid>
         <!--<router-link to="/roupas">Roupas</router-link> -->
         <v-spacer></v-spacer>
@@ -61,11 +62,12 @@
 
 <script>
 import {mapActions} from "vuex"
+import touch from "vuetify/es5/directives/touch/index"
 export default {
   name: 'App',
 
-  components: {
-    
+  directives: {
+    touch
   },
 
   data: () => ({
