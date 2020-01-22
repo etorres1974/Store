@@ -26,7 +26,7 @@
       dark
     >
       <v-app-bar-nav-icon  @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Loja</v-toolbar-title>
+      
       <v-text-field
         class="mx-4 r"
         flat
@@ -55,7 +55,7 @@
       color="indigo"
       app
     >
-      <span class="white--text">&copy; 2019</span>
+      <span class="white--text">&copy; Loja 2019</span>
     </v-footer>
   </v-app>
 </template>
