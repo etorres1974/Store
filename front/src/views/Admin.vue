@@ -62,12 +62,7 @@ export default {
       text: "SnackText",
       error: "",
       // Campos para input
-      roupa: {
-        descricao: "",
-        img: "",
-        flex: 4,
-        fav: false
-      },
+      roupa: {},
 
       // Imagem
       selectedFile: null,
@@ -103,7 +98,7 @@ export default {
       }
     },
     async adicionar(item){
-      await this.adicionarItem(item)
+      this.text = await this.adicionarItem(item)
       this.limparFormulario()
       this.fetchItens()
     },

@@ -34,7 +34,7 @@ const actions = {
     async adicionarItem({commit}, item){
         const response = await axios.post("/roupas", item)
         commit("log", response)
-        
+        return response.data
     },
     adicionarCarrinho({commit}, item){
         if(state.carrinho.includes(item)){

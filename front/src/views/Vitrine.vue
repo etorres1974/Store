@@ -1,10 +1,16 @@
 <template>
   <v-container>
-    <h1>Vitrine</h1>
+    <v-row>
+      <h1>Vitrine </h1>
+      <v-progress-circular v-if="loading" indeterminate color="primary"> </v-progress-circular>  
+    </v-row>
+  
     <v-container fluid>
-      <v-row dense>
-        <v-col v-for="(card) in getFiltrado" :key="card._id" :cols=4>
-          <v-card>
+    
+    <v-row v-if="getFiltrado" dense>
+        <v-col  v-for="(card) in getFiltrado" :key="card._id" :cols=dynamycCol   >
+          <v-card 
+          >
             <v-img
               :src="card.img"
               class="white--text align-end"
@@ -15,7 +21,7 @@
               <v-card-title></v-card-title>
             </v-img>
 
-            <v-card-actions>
+            <v-card-actions >
               {{ card.descricao }}
               <v-spacer></v-spacer>
 
@@ -37,8 +43,9 @@
             </v-card-actions>
           </v-card>
         </v-col>
-        <h3 v-show="getFiltrado.length == 0"> Vazio</h3>
-      </v-row>
+        <h3 v-show="!loading && getFiltrado.length == 0"> Vazio</h3>
+    </v-row>
+    
     </v-container>
   </v-container>
 </template>
@@ -63,6 +70,8 @@ export default {
         flex: 4,
         fav: false
       },
+      //
+      loading: true
       
     
     };
@@ -76,10 +85,20 @@ export default {
   },
   computed: {
     ...mapGetters(['allItens', "getFiltrado", "getCarrinho"]),
+    dynamycCol () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return '12'
+          case 'sm': return '6'
+          case 'md': return '4'
+          case 'lg': return '3'
+          case 'xl': return '2'
+        }
+    }
   },
   
-  created(){
-    this.fetchItens()
+  async created(){
+    await this.fetchItens()
+    this.loading = false
   }
 };
 </script>
