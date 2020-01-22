@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-navigation-drawer
+      
       v-model="drawer"
       app
       @click.stop="drawer = !drawer"
@@ -25,7 +26,7 @@
       dark
     >
       <v-app-bar-nav-icon  @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Loja</v-toolbar-title>
+      
       <v-text-field
         class="mx-4 r"
         flat
@@ -42,7 +43,7 @@
     </v-app-bar>
 
 
-    <v-content >
+    <v-content v-touch="{left: () => drawer = false, right: () => drawer = true}" >
         <v-container fluid>
         <!--<router-link to="/roupas">Roupas</router-link> -->
         <v-spacer></v-spacer>
@@ -54,18 +55,19 @@
       color="indigo"
       app
     >
-      <span class="white--text">&copy; 2019</span>
+      <span class="white--text">&copy; Loja 2019</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
 import {mapActions} from "vuex"
+import touch from "vuetify/es5/directives/touch/index"
 export default {
   name: 'App',
 
-  components: {
-    
+  directives: {
+    touch
   },
 
   data: () => ({
@@ -75,7 +77,8 @@ export default {
       items:[
         {icon:"mdi-home", link:"/admin", name:"Admin"},
         {icon: "mdi-hanger", link:"/vitrine", name:"Vitrine"},
-        {icon: "mdi-shopping", link:"/venda", name:"venda"}
+        {icon: "mdi-shopping", link:"/venda", name:"Sacola"},
+        {icon: "mdi-information-outline", link:"/about", name:"About"}
         
       ]
     }),

@@ -2,14 +2,11 @@
 var mongoose = require('mongoose');
 var roupaSchema = new mongoose.Schema({
     descricao: {
-        type: String,
-        
+        type: String, 
+        required: true //if not required, vuex breaks at filtered search
     },
     img:{
         type: String,
-    },
-    flex:{
-        type: Number
     },
     preco:{
         type: Number,
