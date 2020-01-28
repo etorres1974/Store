@@ -3,7 +3,7 @@
     <h1>Adicionar Roupas</h1>
     <v-row>
       <v-col>
-        <v-file-input show-size label="Foto" @change="onFileSelected" prepend-icon="mdi-camera"></v-file-input>
+        <v-file-input v-model="selectedFile" show-size label="Foto" @change="onFileSelected" prepend-icon="mdi-camera"></v-file-input>
         <v-text-field v-model="roupa.descricao" placeholder="Descrição"></v-text-field>
         <v-text-field type=number v-model="roupa.quantidade" placeholder="Quantidade"></v-text-field>
         <v-text-field type=number v-model="roupa.preco" placeholder="Preço"></v-text-field>
@@ -18,7 +18,7 @@
       </v-row>
       <v-row><br></v-row>
       <v-row >
-        <v-btn block align="center" @click="adicionar(roupa)">Salvar</v-btn>
+        <v-btn block align="center" @click="adicionar()">Salvar</v-btn>
       </v-row>
       
         <v-list>
@@ -41,6 +41,7 @@
 
     <h3 v-show="getFiltrado.length == 0"> Vazio</h3>
 
+    
 
     <v-snackbar :color="color" v-model="snackbar">
       {{ text }}
@@ -77,6 +78,11 @@ export default {
       this.snackbar = true
     },
     async onFileSelected(file) {
+      console.log(file)
+      //this.selectedfile = file
+      console.log(this.selectedFile)
+      
+      /*
       try {
         let contentBuffer = await readFileAsync(file);
         this.roupa.img = contentBuffer;
@@ -95,12 +101,29 @@ export default {
           reader.onerror = reject;
           reader.readAsDataURL(file);
         });
-      }
+      } */
     },
-    async adicionar(item){
-      this.text = await this.adicionarItem(item)
+    async adicionar(){
+      
+      var formData = new FormData()
+      formData.append('image', this.selectedFile)
+      formData.append('descricao', this.roupa.descricao)
+      formData.append('quantidade', this.roupa.quantidade)
+      formData.append('preco', this.roupa.preco)
+      
+      let config = {
+      header : {
+       'Content-Type' : 'multipart/form-data'
+        }
+      }
+      var data = {form: formData, config: config}
+      console.log(...data.form)
+      this.text = await this.adicionarItem(data)
+      //this.text = await this.adicionarItem(form)
+      /*
+      this.text = await this.adicionarItem(this.roupa)
       this.limparFormulario()
-      this.fetchItens()
+      this.fetchItens() */
     },
     ...mapActions(["fetchItens"]),
     ...mapActions(["deleteById"]),

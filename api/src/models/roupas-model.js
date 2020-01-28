@@ -6,7 +6,9 @@ var roupaSchema = new mongoose.Schema({
         required: true //if not required, vuex breaks at filtered search
     },
     img:{
-        type: String,
+        data: Buffer,
+        contentType: String
+        
     },
     preco:{
         type: Number,

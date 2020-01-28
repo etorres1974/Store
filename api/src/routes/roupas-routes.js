@@ -1,5 +1,7 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
+const multer = require('multer')
+const upload = multer({dest: 'uploads/'})
 
 const RoupaController = require('../controllers/roupas-controller')
 
@@ -10,7 +12,7 @@ router.get("/", RoupaController.listarTodos)
 router.get("/:id", RoupaController.buscarPorId)
 
 //Cadastro de Roupas
-router.post("/", RoupaController.cadastrar)
+router.post("/", upload.single('image'), RoupaController.cadastrar)
 
 //Alteração de dados de uma Roupa
 router.put("/", RoupaController.alterar)

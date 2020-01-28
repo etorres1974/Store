@@ -31,8 +31,8 @@ const actions = {
         }}
         // Atualizar Banco
     },
-    async adicionarItem({commit}, item){
-        const response = await axios.post("/roupas", item)
+    async adicionarItem({commit}, data){
+        const response = await axios.post("/roupas", data.form, data.config)
         commit("log", response)
         return response.data
     },

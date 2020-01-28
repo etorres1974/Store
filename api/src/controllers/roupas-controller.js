@@ -1,4 +1,6 @@
 const roupaModel = require("../models/roupas-model")
+const fileHelper = require('../plugins/file-helper')
+const fs = require('fs')
 
 class RoupaController {
 
@@ -14,13 +16,35 @@ class RoupaController {
         res.json(roupa)
     }
 
-    static async cadastrar(req, res) {
+    static async cadastrar(req, res, next) {
+        var roupa = {}
+        var img = {}
+        console.log(req.body)
+        if(req.file){
+            fileHelper.compressImage(req.file,100).then(newPath =>{
+                img.data = fs.readFileSync(newPath)
+                img.contentType = 'image/png'
+                console.log(img)
+                console.log("Upload realizado, o novo path é: " + newPath)
+            }).catch(err => console.log(err))
+            
+        }else{
+            return res.send("Houver erro no upload, o req.file esta undefined")
+        }
+        
+            roupa.descricao = req.body.descricao,
+            roupa.quantidade = req.body.quantidade,
+            roupa.preco = req.body.preco,
+            roupa.img = img
+            
+        await roupaModel.create(roupa).then(image => res.json(image)).catch(err => console.log(err))
+        /*
         try{
         await roupaModel.create(req.body)
         res.send(req.body.descricao + ' cadastrado com sucesso')
         }catch(err){
             res.send(err)
-        }
+        } */
         //envia mensagem pro client
         
     }
