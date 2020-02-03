@@ -3,7 +3,7 @@ const sharp = require('sharp')
 
 exports.compressImage = (file,size) =>{
     
-    const newPath = file.path.split(".") + '.webp'
+    const newPath = file.path.split(".")[0] + '.webp'
                                 // size é opcional, e nao redimenciona se nao for recebido
         return sharp(file.path).resize(size).toFormat("webp").webp({
             quality: 80

@@ -77,31 +77,8 @@ export default {
       this.selectedFile = null
       this.snackbar = true
     },
-    async onFileSelected(file) {
+    async onFileSelected(file){
       console.log(file)
-      //this.selectedfile = file
-      console.log(this.selectedFile)
-      
-      /*
-      try {
-        let contentBuffer = await readFileAsync(file);
-        this.roupa.img = contentBuffer;
-        this.imagePreview = contentBuffer;
-      } catch (err) {
-        console.log(err);
-      }
-      function readFileAsync(file) {
-        return new Promise((resolve, reject) => {
-          let reader = new FileReader();
-
-          reader.onload = () => {
-            resolve(reader.result);
-          };
-
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-      } */
     },
     async adicionar(){
       
@@ -110,20 +87,16 @@ export default {
       formData.append('descricao', this.roupa.descricao)
       formData.append('quantidade', this.roupa.quantidade)
       formData.append('preco', this.roupa.preco)
-      
       let config = {
       header : {
        'Content-Type' : 'multipart/form-data'
         }
       }
       var data = {form: formData, config: config}
-      console.log(...data.form)
+      //console.log(...data.form)
       this.text = await this.adicionarItem(data)
-      //this.text = await this.adicionarItem(form)
-      /*
-      this.text = await this.adicionarItem(this.roupa)
       this.limparFormulario()
-      this.fetchItens() */
+      this.fetchItens() 
     },
     ...mapActions(["fetchItens"]),
     ...mapActions(["deleteById"]),

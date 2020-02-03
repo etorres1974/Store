@@ -17,42 +17,26 @@ class RoupaController {
     }
 
     static async cadastrar(req, res, next) {
-        var roupa = {}
-        var img = {}
-        console.log(req.body)
-        if(req.file){
-            fileHelper.compressImage(req.file,100).then(newPath =>{
-                img.data = fs.readFileSync(newPath)
-                img.contentType = 'image/png'
-                console.log(img)
-                console.log("Upload realizado, o novo path é: " + newPath)
-            }).catch(err => console.log(err))
-            
-        }else{
-            return res.send("Houver erro no upload, o req.file esta undefined")
-        }
-        
+        if (!req.file) {
+            //fileHelper.compressImage(req.file,100).then(newPath =>{
+            //}).catch(err => console.log(err))
+            return res.send("Houver erro no upload, da imagem")
+        } else {
+            var roupa = {}
             roupa.descricao = req.body.descricao,
             roupa.quantidade = req.body.quantidade,
-            roupa.preco = req.body.preco,
-            roupa.img = img
+            roupa.preco = req.body.preco
+            roupa.imgUrl = "/images/" + req.file.filename
             
-        await roupaModel.create(roupa).then(image => res.json(image)).catch(err => console.log(err))
-        /*
-        try{
-        await roupaModel.create(req.body)
-        res.send(req.body.descricao + ' cadastrado com sucesso')
-        }catch(err){
-            res.send(err)
-        } */
-        //envia mensagem pro client
-        
+            await roupaModel.create(roupa).then(data => res.send("Produto Adicionado").catch(err => console.log(err)))
+        }
+
     }
 
     static async alterar(req, res) {
 
         //Leitura dos dados em Json
-        let id = req.body.id 
+        let id = req.body.id
         // Verificar se esse id existe antes
 
         var roupa = {
@@ -69,14 +53,16 @@ class RoupaController {
     }
 
     static async deletar(req, res) {
-        
+
         const id = req.params.id;
-        try{
-        //await roupaModel.findByIdAndDelete(id)
-        var deleted = await roupaModel.deleteOne({_id: id})
-            
+        try {
+            //await roupaModel.findByIdAndDelete(id)
+            var deleted = await roupaModel.deleteOne({
+                _id: id
+            })
+
             res.send(deleted)
-        }catch(err){
+        } catch (err) {
             res.send(err)
         }
     }

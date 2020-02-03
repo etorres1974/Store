@@ -3,11 +3,9 @@ const multer = require("multer")
 module.exports = (multer({
 
     storage: multer.diskStorage({
-        destination: (req,file,cb) =>{
-            cb(null,'../../public/img)
-        },
+        //destination: '../public/img',
+        destination: (req,file,cb) =>{cb(null,'./public/img')},
         filename: (req,file,cb)=>{
-
             cb(null,Date.now().toString() + "-" + file.originalname)
         },
         fileFilter: (req,file,cb) =>{
@@ -26,3 +24,4 @@ module.exports = (multer({
     })
 
 }))
+

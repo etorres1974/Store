@@ -5,17 +5,18 @@ var roupaSchema = new mongoose.Schema({
         type: String, 
         required: true //if not required, vuex breaks at filtered search
     },
-    img:{
-        data: Buffer,
-        contentType: String
-        
-    },
     preco:{
         type: Number,
-        
+        required: true
     },
     quantidade:{
-        type: Number
+        type: Number,
+        required: true
+    },
+    imgUrl:{
+        type: String,
+        required: true
     }
+    
 });
 module.exports = mongoose.model('Roupa', roupaSchema);

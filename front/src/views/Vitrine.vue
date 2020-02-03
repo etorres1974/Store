@@ -12,7 +12,7 @@
           <v-card 
           >
             <v-img
-              :src="card.img"
+              :src="api + card.imgUrl"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
               height="400"
@@ -58,6 +58,7 @@ export default {
   components: {},
   data() {
     return {
+      api: process.env.VUE_API_HOS + "/",
       //SnackBar
       color: "",
       snackbar: false,

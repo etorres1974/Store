@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const compression = require("compression")
+const path = require('path')
 require("dotenv").config()
 
 
@@ -9,9 +9,13 @@ const roupasRoutes = require('./src/routes/roupas-routes')
 
 const app = express()
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json({limit: '50mb', type: 'application/json'}));
 app.use(cors())
-app.use(compression())
+
+// Dir vai ser a rota completa para a pasta onde estão salvas as imagens, e essa rota é cadastrada na raiz/nome_da_imagem
+//var dir = path.join(__dirname, 'public/img');
+app.use('/images', express.static(__dirname +  '/public/img'));
 
 //Cadastrando sistema de rota
 app.use('/roupas',  roupasRoutes)
